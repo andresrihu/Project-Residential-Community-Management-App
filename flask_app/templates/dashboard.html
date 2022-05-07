@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"> -->
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <h1>Welcome, {{session["first_name"]}}</h1>
+            <span>
+                <a class="btn btn-outline-primary" href="/inbox">My Messages</a>
+                <a class="btn btn-success" href="/my_dash">My Dashboard</a>
+                <a class="btn btn-danger" href="/logout">Logout</a>
+            </span>
+        </div>
+    </nav>
+    <div class="container d-flex">
+        <div class="container d-flex">
+            <div class="container d-flex flex-column">
+                <h2>Mission:</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi nesciunt quis quibusdam magni blanditiis. Reprehenderit iure, quod veritatis officia accusamus dignissimos voluptate quasi, esse eligendi obcaecati, tenetur ea sapiente ratione pariatur sint quia minus sequi quisquam similique odit. Amet, tempora.</p>
+                <h2>Values</h2>
+                <p>Inclusion, Innovation, Grace</p>
+                
+                <a href="/maintenance">Maintenance:</a> <p>Click here to learn about recurring maintenance being completed every month.</p>
+                <a href="/finances">Finances:</a> <p>Click here to learn about how the community board is using its resources.</p>
+                <a href="/all_projects">Current Projects:</a>
+                <p>Click here to learn about currently approved projects set to improve the quality of our community.</p>
+                <a href="/submit_project">Submit Project Idea:</a><p>Click here to submit a community project idea for the board</p>
+            </div>
+        </div>
+        <div style="height:600px;width:600px;border:1px solid;overflow:auto;" class="container d-flex">
+            <!-- update/test after creating house class -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Residence</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for house in houses %}
+                    <tr>
+                        <td>{{house.number}} </td>
+                        <td> <a href="/resident/{{house.id}}">view</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <!-- <div class="footer">
+        <p>Footer goes here</p>
+    </div> -->
+
+</body>
+
+</html>

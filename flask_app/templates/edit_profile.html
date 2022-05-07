@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residence Profile</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <h1>Editing {{resident.first_name}}'s Profile</h1>
+            <span>
+                <a class="btn btn-warning" href="/my_dash">My Dashboard</a>
+                <a class="btn btn-success" href="/dashboard">Main Dashboard</a>
+                <a class="btn btn-danger" href="/logout">Logout</a>
+            </span>
+        </div>
+    </nav>
+    <div class="container text-center">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <p class="text-danger">{{message}}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    <div class="container d-flex">
+        <div class="container d-flex">
+            <div class="container d-flex flex-column">
+                <!-- add if statement so only user in session is able to edit their profile -->
+                <h2>Resident Info:</h2>
+                <form action="/edit/profile/{{resident.id}}" method="post">
+
+                    <label class="form-label" for="first_name">First Name:</label>
+                    <input class="form-control" type="text" name="first_name" value="{{resident.first_name}}">
+    
+                    <label class="form-label" for="last_name">Last Name:</label>
+                    <input class="form-control" type="text" name="last_name" value="{{resident.last_name}}">
+    
+                    <label class="form-label" for="email">Email:</label>
+                    <input class="form-control" type="text" name="email" value="{{resident.email}}">
+                    <br>
+
+                    
+                    {% if resident.resident_since == None %}
+                    <label class="form-label" for="resident_since">Time In Residence:</label>
+                    <input class="form-control" type="date" name="resident_since">
+                    {% else %}
+                    <label class="form-label" for="resident_since">Time In Residence:</label>
+                    <input class="form-control" type="date" name="resident_since" value="{{resident.resident_since.strftime('%Y-%m-%d')}}">
+                    {% endif %}
+
+                    <br>
+
+                    <label class="form-label" for="phone_number">Phone Number:</label>
+                    <input class="form-control" type="number" name="phone_number" value="{{resident.phone_number}}">
+
+                    <label class="form-label" for="role">Role in Community:</label>
+                    <select name="role">
+                        <option value="Resident">Resident</option>
+                        <option value="Board Member">Board Member</option>
+                    </select>
+
+                    <label class="form-label" for="about">Tell other residents about you!</label>
+                    <textarea name="about" id="" cols="30" rows="10">{{resident.about}}</textarea>
+                    <br>
+
+                    <input class="btn btn-warning"type="submit" value="Update Resident Info">
+                
+            </div>
+        </div>
+        <div class="container d-flex">
+            
+
+        </div>
+    </div>
+</body>
+
+</html>

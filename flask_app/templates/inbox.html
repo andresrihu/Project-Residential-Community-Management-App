@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <h4 class="text-center">{{session["first_name"]}}'s Messages </h4>
+            <span>
+                <a class="btn btn-success" href="/dashboard">Main Dashboard</a>
+                <a class="btn btn-danger" href="/logout">Logout</a>
+            </span>
+        </div>
+    </nav>
+    <div class="container d-flex">
+        <div class="container">
+            <p><u>{{ messages | length }} Message(s) for You</u></p>
+            <div class="container d-flex flex-column">
+                {% for message in messages %}
+                <div class="container">
+                    <p>{{ message.sender }} said {{ message.time_span() }}:</p>
+                    <p>{{ message.content }}</p>
+                </div>
+                <div>
+                    <a class="btn btn-danger"href="/delete_message/{{ message.id }}">Delete</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="container">
+            <p><u>Send Messages</u></p>
+            
+            <div class="container">
+                <br>
+                {% for resident in residents %}
+                    {% if resident.id != session.user_id %}
+                    <form class="container d-flex" action="/send_message" method="post">
+                        <input type="hidden" name="receiver_id" value="{{resident.id}}">
+                        <input type="hidden" name="sender_id" value="{{session.user_id}}">
+                        <label class="form-label me-2" for="receiver_id">{{resident.first_name}}</label>
+                        <textarea class="form-control" name="content"></textarea>
+                        <input class="btn btn-warning ms-2" type="submit" value="Send">
+                    </form>
+                <br>
+                    {% endif %}
+                {% endfor %}
+                <br>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

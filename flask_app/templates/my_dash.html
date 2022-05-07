@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <h1>{{session["first_name"]}}'s Dashboard</h1>
+            <span>
+                <a class="btn btn-success" href="/dashboard">Main Dashboard</a>
+                <a class="btn btn-danger" href="/logout">Logout</a>
+            </span>
+        </div>
+    </nav>
+    <div class="container d-flex">
+        <div class="container d-flex">
+            <div class="container d-flex flex-column">
+                <!-- add if statement so only user in session is able to edit their profile -->
+                <h2>Resident Info:</h2>
+                <span><a class="btn btn-outline-warning" href="/edit/profile/{{session['user_id']}}">Edit Profile</a></span>
+
+                <p>Resident: {{resident.first_name}} {{resident.last_name}}</p>
+
+                <p>Residence: {{resident.house.number}}</p>
+                <p>{% if resident.resident_since != None %} Time in residence: Resident since {{resident.resident_since.strftime('%B %Y')}} {% endif %}</p>
+                
+                {% if resident.phone_number != None %}
+                <p>Phone Number: {{resident.phone_number}}</p>
+                {% endif %}
+
+                <p>Role in Community: {{resident.role}}</p>
+
+                
+                <p>About: {{resident.about}}</p>
+                
+            </div>
+        </div>
+        <div class="container d-flex">
+            
+        </div>
+    </div>
+</body>
+
+</html>
